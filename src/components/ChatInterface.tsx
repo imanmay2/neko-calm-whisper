@@ -107,7 +107,7 @@ export const ChatInterface = ({ initialPrompt }: ChatInterfaceProps) => {
         </div>
       </div>
 
-      <ScrollArea className="h-96 mb-4 relative z-10" ref={scrollAreaRef}>
+      <ScrollArea className="h-[600px] mb-4 relative z-10" ref={scrollAreaRef}>
         <div className="space-y-4 pr-4">
           {messages.map((message, index) => (
             <div key={message.id} className="space-y-2">
