@@ -1,13 +1,13 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 interface BreathingExerciseProps {
   onClose: () => void;
+  isDarkMode?: boolean;
 }
 
-export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
+export const BreathingExercise = ({ onClose, isDarkMode = true }: BreathingExerciseProps) => {
   const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
   const [count, setCount] = useState(4);
   const [isActive, setIsActive] = useState(false);
@@ -65,27 +65,49 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   };
 
   return (
-    <Card className="bg-gray-800/90 backdrop-blur-md border-gray-700/50 p-8 relative overflow-hidden animate-fade-in">
+    <Card className={`backdrop-blur-md border p-8 relative overflow-hidden animate-fade-in transition-all duration-500 ${
+      isDarkMode 
+        ? 'bg-gray-800/90 border-gray-700/50' 
+        : 'bg-white/90 border-gray-200/50'
+    }`}>
       {/* Animated background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-green-500/5"></div>
-      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+      <div className={`absolute inset-0 ${
+        isDarkMode 
+          ? 'bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-green-500/5' 
+          : 'bg-gradient-to-br from-blue-200/10 via-purple-200/10 to-green-200/10'
+      }`}></div>
+      <div className={`absolute top-1/2 left-1/2 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse ${
+        isDarkMode 
+          ? 'bg-gradient-to-r from-blue-500/10 to-purple-500/10' 
+          : 'bg-gradient-to-r from-blue-300/20 to-purple-300/20'
+      }`}></div>
       
       <div className="text-center space-y-6 relative z-10">
         <div className="flex items-center justify-between mb-6">
           <Button 
             variant="ghost" 
             onClick={onClose} 
-            className="text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all duration-300 hover:scale-105"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isDarkMode 
+                ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
+                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100/50'
+            }`}
           >
             ← Back
           </Button>
-          <h2 className="text-2xl font-bold text-white bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+          <h2 className={`text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent transition-all duration-500 ${
+            isDarkMode 
+              ? 'from-white to-blue-200' 
+              : 'from-gray-800 to-blue-600'
+          }`}>
             Breathing Exercise
           </h2>
           <div className="w-16"></div>
         </div>
 
-        <p className="text-gray-300 mb-8 animate-fade-in">
+        <p className={`mb-8 animate-fade-in transition-colors duration-500 ${
+          isDarkMode ? 'text-gray-300' : 'text-gray-600'
+        }`}>
           Follow the rhythm: Inhale for 4, hold for 4, exhale for 4. Let your body relax with each breath.
         </p>
 
@@ -108,11 +130,17 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         </div>
 
         <div className="space-y-4">
-          <div className="text-gray-300 p-4 bg-gray-700/30 rounded-lg backdrop-blur-sm border border-gray-600/30">
+          <div className={`p-4 rounded-lg backdrop-blur-sm border transition-all duration-500 ${
+            isDarkMode 
+              ? 'text-gray-300 bg-gray-700/30 border-gray-600/30' 
+              : 'text-gray-700 bg-gray-100/30 border-gray-300/30'
+          }`}>
             <div className="flex items-center justify-center space-x-4">
               <span>Completed cycles:</span>
               <div className="flex items-center space-x-2">
-                <span className="text-white font-semibold text-lg">{totalCycles}</span>
+                <span className={`font-semibold text-lg transition-colors duration-500 ${
+                  isDarkMode ? 'text-white' : 'text-gray-800'
+                }`}>{totalCycles}</span>
                 {totalCycles > 0 && <span className="text-green-400 animate-bounce">✨</span>}
               </div>
             </div>
@@ -130,7 +158,11 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
               <Button 
                 onClick={() => setIsActive(false)}
                 variant="outline"
-                className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-300 hover:scale-105 backdrop-blur-sm"
+                className={`border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
+                  isDarkMode 
+                    ? 'border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white' 
+                    : 'border-gray-300/50 text-gray-600 hover:bg-gray-100/50 hover:text-gray-800'
+                }`}
               >
                 Pause
               </Button>
@@ -139,13 +171,19 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         </div>
 
         {totalCycles >= 3 && (
-          <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 animate-fade-in backdrop-blur-sm">
+          <div className={`rounded-lg p-4 border animate-fade-in backdrop-blur-sm transition-all duration-500 ${
+            isDarkMode 
+              ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-500/20' 
+              : 'bg-gradient-to-r from-green-100/50 to-emerald-100/50 border-green-400/30'
+          }`}>
             <div className="flex items-center justify-center space-x-2 mb-2">
               <span className="text-2xl animate-bounce">🎉</span>
               <span className="text-green-400 font-semibold">Well Done!</span>
               <span className="text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>🎉</span>
             </div>
-            <p className="text-gray-100 text-sm">
+            <p className={`text-sm transition-colors duration-500 ${
+              isDarkMode ? 'text-gray-100' : 'text-gray-700'
+            }`}>
               Great job! You've completed {totalCycles} breathing cycles. 
               Notice how your body feels more relaxed. You can continue or try another exercise. 💜
             </p>
