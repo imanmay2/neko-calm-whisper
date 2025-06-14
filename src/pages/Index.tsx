@@ -3,11 +3,18 @@ import { useState } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
 import { MoodSelector } from "@/components/MoodSelector";
 import { SelfHelpMenu } from "@/components/SelfHelpMenu";
+import { DemoPrompts } from "@/components/DemoPrompts";
 import { Button } from "@/components/ui/button";
-import { Heart, MessageCircle, Book } from "lucide-react";
+import { Heart, MessageCircle, Book, TestTube } from "lucide-react";
 
 const Index = () => {
-  const [activeView, setActiveView] = useState<'chat' | 'mood' | 'selfhelp'>('chat');
+  const [activeView, setActiveView] = useState<'chat' | 'mood' | 'selfhelp' | 'demo'>('chat');
+  const [chatPrompt, setChatPrompt] = useState<string>('');
+
+  const handlePromptSelect = (prompt: string) => {
+    setChatPrompt(prompt);
+    setActiveView('chat');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-purple-900 relative overflow-hidden">
@@ -69,6 +76,18 @@ const Index = () => {
                 <Book className="w-4 h-4 mr-2" />
                 Self-Help
               </Button>
+              <Button
+                variant={activeView === 'demo' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setActiveView('demo')}
+                className={`transition-all duration-300 hover:scale-105 ${activeView === 'demo' 
+                  ? "bg-purple-600 text-white hover:bg-purple-700 shadow-lg" 
+                  : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                }`}
+              >
+                <TestTube className="w-4 h-4 mr-2" />
+                Demo
+              </Button>
             </div>
           </div>
         </div>
@@ -79,7 +98,7 @@ const Index = () => {
         <div className="transition-all duration-500 ease-in-out">
           {activeView === 'chat' && (
             <div className="animate-fade-in">
-              <ChatInterface />
+              <ChatInterface key={chatPrompt} initialPrompt={chatPrompt} />
             </div>
           )}
           {activeView === 'mood' && (
@@ -90,6 +109,11 @@ const Index = () => {
           {activeView === 'selfhelp' && (
             <div className="animate-fade-in">
               <SelfHelpMenu />
+            </div>
+          )}
+          {activeView === 'demo' && (
+            <div className="animate-fade-in">
+              <DemoPrompts onPromptSelect={handlePromptSelect} />
             </div>
           )}
         </div>
