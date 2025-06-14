@@ -58,9 +58,9 @@ export const SelfHelpMenu = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-6">
+      <Card className="bg-gray-800 border-gray-700 p-6">
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Self-Help Toolkit</h2>
-        <p className="text-purple-200 text-center mb-6">
+        <p className="text-gray-300 text-center mb-6">
           Choose an exercise that feels right for you in this moment. Remember, small steps count! 💜
         </p>
       </Card>
@@ -69,7 +69,7 @@ export const SelfHelpMenu = () => {
         {exercises.map((exercise) => (
           <Card 
             key={exercise.id}
-            className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-6 hover:bg-purple-800/40 transition-all cursor-pointer group"
+            className="bg-gray-800 border-gray-700 p-6 hover:bg-gray-750 transition-all cursor-pointer group"
             onClick={() => setActiveExercise(exercise.id)}
           >
             <div className="flex items-start space-x-4">
@@ -78,10 +78,10 @@ export const SelfHelpMenu = () => {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-white mb-2">{exercise.title}</h3>
-                <p className="text-purple-200 text-sm mb-4">{exercise.description}</p>
+                <p className="text-gray-300 text-sm mb-4">{exercise.description}</p>
                 <Button 
                   size="sm" 
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
                 >
                   Start Exercise
                 </Button>
@@ -91,17 +91,17 @@ export const SelfHelpMenu = () => {
         ))}
       </div>
 
-      <Card className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-6">
+      <Card className="bg-gray-800 border-gray-700 p-6">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-white mb-2">Need immediate help?</h3>
-          <p className="text-purple-200 mb-4">
+          <p className="text-gray-300 mb-4">
             If you're having thoughts of self-harm or suicide, please reach out for professional support.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-700/30">
+            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
               Crisis Text Line: Text HOME to 741741
             </Button>
-            <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-700/30">
+            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
               National Suicide Prevention: 988
             </Button>
           </div>

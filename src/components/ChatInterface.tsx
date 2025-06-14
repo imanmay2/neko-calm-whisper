@@ -78,7 +78,7 @@ export const ChatInterface = () => {
   };
 
   return (
-    <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-700/30 shadow-2xl">
+    <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-2xl">
       <ScrollArea className="h-96 mb-4" ref={scrollAreaRef}>
         <div className="space-y-4 pr-4">
           {messages.map((message) => (
@@ -89,8 +89,8 @@ export const ChatInterface = () => {
               <div
                 className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
                   message.sender === 'user'
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                    : 'bg-purple-800/50 text-purple-100 border border-purple-600/30'
+                    ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white'
+                    : 'bg-gray-700 text-gray-100 border border-gray-600'
                 }`}
               >
                 <p className="text-sm leading-relaxed">{message.text}</p>
@@ -103,7 +103,7 @@ export const ChatInterface = () => {
           
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-purple-800/50 text-purple-100 border border-purple-600/30 px-4 py-3 rounded-2xl">
+              <div className="bg-gray-700 text-gray-100 border border-gray-600 px-4 py-3 rounded-2xl">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -121,13 +121,13 @@ export const ChatInterface = () => {
           onChange={(e) => setInputText(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Share what's on your mind..."
-          className="flex-1 bg-purple-800/30 border-purple-600/50 text-purple-100 placeholder:text-purple-300 focus:ring-purple-400 focus:border-purple-400"
+          className="flex-1 bg-gray-700 border-gray-600 text-gray-100 placeholder:text-gray-400 focus:ring-purple-500 focus:border-purple-500"
           disabled={isTyping}
         />
         <Button
           onClick={handleSendMessage}
           disabled={!inputText.trim() || isTyping}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+          className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
         >
           <Send className="w-4 h-4" />
         </Button>

@@ -57,17 +57,17 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   };
 
   return (
-    <Card className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-8">
+    <Card className="bg-gray-800 border-gray-700 p-8">
       <div className="text-center space-y-6">
         <div className="flex items-center justify-between mb-6">
-          <Button variant="ghost" onClick={onClose} className="text-purple-300 hover:text-white">
+          <Button variant="ghost" onClick={onClose} className="text-gray-300 hover:text-white hover:bg-gray-700">
             ← Back
           </Button>
           <h2 className="text-2xl font-bold text-white">Breathing Exercise</h2>
           <div className="w-16"></div>
         </div>
 
-        <p className="text-purple-200 mb-8">
+        <p className="text-gray-300 mb-8">
           Follow the rhythm: Inhale for 4, hold for 4, exhale for 4. Let your body relax with each breath.
         </p>
 
@@ -81,14 +81,14 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         </div>
 
         <div className="space-y-4">
-          <div className="text-purple-200">
+          <div className="text-gray-300">
             Completed cycles: <span className="text-white font-semibold">{totalCycles}</span>
           </div>
           <div className="flex gap-4 justify-center">
             {!isActive ? (
               <Button 
                 onClick={() => setIsActive(true)}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
               >
                 Start Breathing
               </Button>
@@ -96,7 +96,7 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
               <Button 
                 onClick={() => setIsActive(false)}
                 variant="outline"
-                className="border-purple-400 text-purple-300 hover:bg-purple-700/30"
+                className="border-gray-600 text-gray-300 hover:bg-gray-700"
               >
                 Pause
               </Button>
@@ -105,8 +105,8 @@ export const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         </div>
 
         {totalCycles >= 3 && (
-          <div className="bg-purple-800/30 rounded-lg p-4 border border-purple-600/30">
-            <p className="text-purple-100 text-sm">
+          <div className="bg-gray-700 rounded-lg p-4 border border-gray-600">
+            <p className="text-gray-100 text-sm">
               Great job! You've completed {totalCycles} breathing cycles. 
               Notice how your body feels more relaxed. You can continue or try another exercise. 💜
             </p>

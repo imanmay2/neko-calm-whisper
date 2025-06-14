@@ -29,9 +29,9 @@ export const MoodSelector = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-6">
+      <Card className="bg-gray-800 border-gray-700 p-6">
         <h2 className="text-2xl font-bold text-white mb-4 text-center">How are you feeling today?</h2>
-        <p className="text-purple-200 text-center mb-6">
+        <p className="text-gray-300 text-center mb-6">
           Tracking your mood helps Neko understand you better and provide more personalized support.
         </p>
         
@@ -40,25 +40,25 @@ export const MoodSelector = () => {
             <Button
               key={mood.label}
               variant="ghost"
-              className={`h-20 flex flex-col items-center justify-center space-y-2 hover:bg-purple-700/30 border-2 transition-all ${
+              className={`h-20 flex flex-col items-center justify-center space-y-2 hover:bg-gray-700 border-2 transition-all ${
                 selectedMood === mood.label 
-                  ? 'border-purple-400 bg-purple-700/50' 
-                  : 'border-purple-600/30'
+                  ? 'border-purple-500 bg-gray-700' 
+                  : 'border-gray-600'
               }`}
               onClick={() => handleMoodSelect(mood)}
             >
               <span className="text-3xl">{mood.emoji}</span>
-              <span className="text-purple-100 text-sm">{mood.label}</span>
+              <span className="text-gray-100 text-sm">{mood.label}</span>
             </Button>
           ))}
         </div>
 
         {selectedMood && (
           <div className="text-center">
-            <p className="text-purple-200 mb-4">
+            <p className="text-gray-300 mb-4">
               Thank you for sharing! I'm here to support you through whatever you're feeling. 💜
             </p>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
+            <Button className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white">
               Get personalized support
             </Button>
           </div>
@@ -66,16 +66,16 @@ export const MoodSelector = () => {
       </Card>
 
       {moodHistory.length > 0 && (
-        <Card className="bg-purple-900/30 backdrop-blur-sm border-purple-700/30 p-6">
+        <Card className="bg-gray-800 border-gray-700 p-6">
           <h3 className="text-xl font-semibold text-white mb-4">Your Mood Journey</h3>
           <div className="space-y-3">
             {moodHistory.map((entry, index) => (
-              <div key={index} className="flex items-center justify-between bg-purple-800/30 rounded-lg p-3">
+              <div key={index} className="flex items-center justify-between bg-gray-700 rounded-lg p-3">
                 <div className="flex items-center space-x-3">
                   <span className="text-2xl">{entry.emoji}</span>
-                  <span className="text-purple-100">{entry.mood}</span>
+                  <span className="text-gray-100">{entry.mood}</span>
                 </div>
-                <span className="text-purple-300 text-sm">{entry.date}</span>
+                <span className="text-gray-400 text-sm">{entry.date}</span>
               </div>
             ))}
           </div>
