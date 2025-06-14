@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,7 @@ interface Message {
   timestamp: Date;
   mood?: string;
   isCrisis?: boolean;
+  isTyping?: boolean;
 }
 
 interface ChatInterfaceProps {
@@ -31,6 +31,8 @@ export const ChatInterface = ({ initialPrompt, isDarkMode = true }: ChatInterfac
   ]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [typewriterText, setTypewriterText] = useState("");
+  const [currentTypingMessageId, setCurrentTypingMessageId] = useState<string | null>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Handle initial prompt from demo
@@ -51,7 +53,32 @@ export const ChatInterface = ({ initialPrompt, isDarkMode = true }: ChatInterfac
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, typewriterText]);
+
+  const typewriterEffect = (text: string, messageId: string) => {
+    setTypewriterText("");
+    setCurrentTypingMessageId(messageId);
+    let index = 0;
+    
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setTypewriterText(prev => prev + text[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+        setCurrentTypingMessageId(null);
+        setTypewriterText("");
+        // Update the message with final text and remove typing flag
+        setMessages(prev => prev.map(msg => 
+          msg.id === messageId 
+            ? { ...msg, text: text, isTyping: false }
+            : msg
+        ));
+      }
+    }, 30); // Adjust speed here (lower = faster)
+
+    return () => clearInterval(interval);
+  };
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
@@ -70,17 +97,22 @@ export const ChatInterface = ({ initialPrompt, isDarkMode = true }: ChatInterfac
     // Simulate AI thinking time
     setTimeout(async () => {
       const aiResponse = await getAIResponse(inputText, messages);
+      const nekoMessageId = (Date.now() + 1).toString();
       const nekoMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: aiResponse.text,
+        id: nekoMessageId,
+        text: "",
         sender: 'neko',
         timestamp: new Date(),
         mood: aiResponse.detectedMood,
-        isCrisis: aiResponse.isCrisis
+        isCrisis: aiResponse.isCrisis,
+        isTyping: true
       };
 
       setMessages(prev => [...prev, nekoMessage]);
       setIsTyping(false);
+      
+      // Start typewriter effect
+      typewriterEffect(aiResponse.text, nekoMessageId);
     }, 1500);
   };
 
@@ -141,7 +173,11 @@ export const ChatInterface = ({ initialPrompt, isDarkMode = true }: ChatInterfac
                     : 'bg-gray-100/80 backdrop-blur-sm text-gray-800 border border-gray-300/50 hover:bg-gray-200/90'
                 }`}
               >
-                <p className="text-sm leading-relaxed whitespace-pre-line">{message.text}</p>
+                <p className="text-sm leading-relaxed whitespace-pre-line">
+                  {message.isTyping && currentTypingMessageId === message.id 
+                    ? typewriterText + (typewriterText ? '▋' : '') 
+                    : message.text}
+                </p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-xs opacity-70">
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
