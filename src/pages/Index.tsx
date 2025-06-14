@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
+import { ChatSidebar } from "@/components/ChatSidebar";
 import { MoodSelector } from "@/components/MoodSelector";
 import { SelfHelpMenu } from "@/components/SelfHelpMenu";
 import { DemoPrompts } from "@/components/DemoPrompts";
@@ -43,7 +44,7 @@ const Index = () => {
           ? 'bg-gray-800/80 border-gray-700/50' 
           : 'bg-white/80 border-gray-200/50'
       }`}>
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
@@ -136,29 +137,39 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Main Content with transitions */}
-      <div className="max-w-4xl mx-auto p-4 relative z-10">
-        <div className="transition-all duration-500 ease-in-out">
+      {/* Main Content with Sidebar */}
+      <div className="max-w-7xl mx-auto p-4 relative z-10">
+        <div className="flex gap-4 h-[calc(100vh-120px)]">
+          {/* Sidebar - only show on chat view */}
           {activeView === 'chat' && (
-            <div className="animate-fade-in">
-              <ChatInterface key={chatPrompt} initialPrompt={chatPrompt} isDarkMode={isDarkMode} />
+            <div className="flex-shrink-0 animate-fade-in">
+              <ChatSidebar isDarkMode={isDarkMode} />
             </div>
           )}
-          {activeView === 'mood' && (
-            <div className="animate-fade-in">
-              <MoodSelector isDarkMode={isDarkMode} />
-            </div>
-          )}
-          {activeView === 'selfhelp' && (
-            <div className="animate-fade-in">
-              <SelfHelpMenu isDarkMode={isDarkMode} />
-            </div>
-          )}
-          {activeView === 'demo' && (
-            <div className="animate-fade-in">
-              <DemoPrompts onPromptSelect={handlePromptSelect} isDarkMode={isDarkMode} />
-            </div>
-          )}
+          
+          {/* Main Content */}
+          <div className="flex-1 transition-all duration-500 ease-in-out">
+            {activeView === 'chat' && (
+              <div className="animate-fade-in">
+                <ChatInterface key={chatPrompt} initialPrompt={chatPrompt} isDarkMode={isDarkMode} />
+              </div>
+            )}
+            {activeView === 'mood' && (
+              <div className="animate-fade-in">
+                <MoodSelector isDarkMode={isDarkMode} />
+              </div>
+            )}
+            {activeView === 'selfhelp' && (
+              <div className="animate-fade-in">
+                <SelfHelpMenu isDarkMode={isDarkMode} />
+              </div>
+            )}
+            {activeView === 'demo' && (
+              <div className="animate-fade-in">
+                <DemoPrompts onPromptSelect={handlePromptSelect} isDarkMode={isDarkMode} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
